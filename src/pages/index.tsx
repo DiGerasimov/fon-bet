@@ -16,7 +16,7 @@ const Container = styled.div`
   overflow: hidden; /* Предотвращаем скролл */
 `;
 
-const HomePage: React.FC = () => {
+const HomePage = () => {
   return (
     <Container>
       <Head>
