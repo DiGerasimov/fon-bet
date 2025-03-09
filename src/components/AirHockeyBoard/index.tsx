@@ -32,8 +32,13 @@ import SettingsMenu from '../SettingsMenu';
 import { isMobileDevice, applyMobileOptimizations } from '@/utils/mobileDetect';
 import styled from 'styled-components';
 
+// Определяем интерфейс для наших свойств
+interface GameOverlayProps {
+  isVisible: boolean;
+}
+
 // Создаем компонент для затемнения экрана при открытии меню на мобильных устройствах
-const GameOverlay = styled.div<{ isVisible: boolean }>`
+const GameOverlay = styled.div<GameOverlayProps>`
   position: fixed;
   top: 0;
   left: 0;
