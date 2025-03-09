@@ -7,6 +7,7 @@ interface SettingsMenuProps {
   onOpenLeaderBoard: () => void;
   onOpenTeamSelector: () => void;
   onResetToCenter: () => void;
+  onStartGame?: () => void;
   onMenuToggle?: (isOpen: boolean) => void;
 }
 
@@ -129,6 +130,7 @@ const SettingsMenu = ({
   onOpenLeaderBoard,
   onOpenTeamSelector,
   onResetToCenter,
+  onStartGame,
   onMenuToggle
 }: SettingsMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -187,6 +189,11 @@ const SettingsMenu = ({
         }
       }} />}
       <MenuDropdown isOpen={isOpen} isMobile={isMobile}>
+        {onStartGame && (
+          <MenuItem onClick={() => handleItemClick(onStartGame)} style={{ color: '#4caf50', fontWeight: 'bold' }}>
+            Начать игру
+          </MenuItem>
+        )}
         <MenuItem onClick={() => handleItemClick(onOpenSettings)}>Настройки</MenuItem>
         <MenuItem onClick={() => handleItemClick(onOpenLeaderBoard)}>Лидеры</MenuItem>
         <MenuItem onClick={() => handleItemClick(onOpenTeamSelector)}>Выбор команды</MenuItem>

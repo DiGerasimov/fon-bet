@@ -26,6 +26,7 @@ import { CANVAS_WIDTH, CANVAS_HEIGHT } from './constants';
 import Settings from '../Settings';
 import LeaderBoard from '../LeaderBoard';
 import TeamSelector from '../TeamSelector';
+import GameStartModal from '../GameStartModal';
 import { useSettings } from '@/contexts/SettingsContext';
 import { GameSettings } from '@/contexts/SettingsContext';
 import Logo from '../Logo';
@@ -71,6 +72,8 @@ function AirHockeyBoard() {
   const [isLeaderBoardOpen, setIsLeaderBoardOpen] = useState(false);
   const [isTeamSelectorOpen, setIsTeamSelectorOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false); // Состояние для отслеживания открытия меню
+  const [isGameStartModalOpen, setIsGameStartModalOpen] = useState(true); // Показываем модальное окно при загрузке
+  const [isGameActive, setIsGameActive] = useState(false); // Флаг активности игры
   // @ts-ignore
   const containerRef = useRef(null);
   const gameLayoutRef = useRef<HTMLDivElement>(null);
@@ -218,6 +221,24 @@ function AirHockeyBoard() {
     setIsMenuOpen(isOpen);
   };
 
+  // Функция для обработки закрытия модального окна начала игры
+  const handleCloseGameStartModal = () => {
+    setIsGameStartModalOpen(false);
+  };
+
+  // Функция для обработки начала игры
+  const handleGameStart = () => {
+    setIsGameActive(true);
+    // Можно сбросить счет и позиции игроков при новой игре, если требуется
+    handleResetToCenter();
+  };
+
+  // Функция для показа модального окна начала игры
+  const handleShowGameStartModal = () => {
+    setIsGameActive(false);
+    setIsGameStartModalOpen(true);
+  };
+
   // Добавляем мета-тег через DOM API вместо Head из Next.js
   useEffect(() => {
     // Добавляем мета-тег viewport для предотвращения масштабирования на мобильных устройствах
@@ -270,6 +291,7 @@ function AirHockeyBoard() {
               onOpenTeamSelector={handleOpenTeamSelector}
               onResetToCenter={handleResetAndCloseMenu}
               onMenuToggle={handleMenuToggle}
+              onStartGame={handleShowGameStartModal}
             />
             
             {/* Скрытые кнопки для обратной совместимости */}
@@ -329,6 +351,12 @@ function AirHockeyBoard() {
         onClose={handleCloseLeaderBoard}
         playerScore={gameState.playerScore}
         computerScore={gameState.computerScore}
+      />
+
+      <GameStartModal
+        isOpen={isGameStartModalOpen}
+        onClose={handleCloseGameStartModal}
+        onGameStart={handleGameStart}
       />
     </GameContainer>
   );
