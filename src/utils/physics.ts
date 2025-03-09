@@ -1,6 +1,6 @@
 import { Puck, BoardDimensions, Mallet } from '@/utils/types';
 import { FRICTION, BALL_SPEED } from '@/constants/gameConstants';
-import { resetPuck } from './puckUtils';
+import { resetPuck, resetPuckToPlayerHalf } from './puckUtils';
 
 /**
  * Обновляет позицию и скорость шайбы на основе физики и проверяет голы
@@ -57,7 +57,8 @@ export const updatePuckPhysics = (
     if (inGoalXRange) {
       // Гол игрока
       newPlayerScore++;
-      newPuck = resetPuck();
+      // Размещаем шайбу на стороне компьютера (проигравшего)
+      newPuck = resetPuckToPlayerHalf(board, false);
     } else {
       // Отскок от верхней стены
       newPuck.velocity.y *= -1;
@@ -70,7 +71,8 @@ export const updatePuckPhysics = (
     if (inGoalXRange) {
       // Гол компьютера
       newComputerScore++;
-      newPuck = resetPuck();
+      // Размещаем шайбу на стороне игрока (проигравшего)
+      newPuck = resetPuckToPlayerHalf(board, true);
     } else {
       // Отскок от нижней стены
       newPuck.velocity.y *= -1;
