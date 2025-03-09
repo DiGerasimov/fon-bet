@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, ReactNode } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 import { DEFAULT_SETTINGS } from '@/constants/gameConstants';
 
 // Интерфейс для настроек
@@ -17,20 +17,20 @@ interface SettingsContextType {
 }
 
 // Создаем контекст с значениями по умолчанию
-const SettingsContext = createContext<SettingsContextType>({
+const SettingsContext = createContext({
   settings: DEFAULT_SETTINGS,
-  updateSettings: () => {},
-  resetSettings: () => {},
-});
+  updateSettings: (() => {}) as (newSettings: Partial<GameSettings>) => void,
+  resetSettings: (() => {}) as () => void,
+} as SettingsContextType);
 
 // Пропсы для провайдера настроек
-interface SettingsProviderProps {
-  children: React.ReactNode;
+type SettingsProviderProps = {
+  children: any;
 }
 
 // Провайдер контекста настроек
 export const SettingsProvider = ({ children }: SettingsProviderProps) => {
-  const [settings, setSettings] = useState<GameSettings>(DEFAULT_SETTINGS);
+  const [settings, setSettings] = useState(DEFAULT_SETTINGS as GameSettings);
 
   // Функция для обновления настроек
   const updateSettings = (newSettings: Partial<GameSettings>) => {
