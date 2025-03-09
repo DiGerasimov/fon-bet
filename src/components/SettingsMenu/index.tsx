@@ -133,7 +133,7 @@ const SettingsMenu = ({
 }: SettingsMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef(null as HTMLDivElement | null);
   
   // Определяем, является ли устройство мобильным
   useEffect(() => {
