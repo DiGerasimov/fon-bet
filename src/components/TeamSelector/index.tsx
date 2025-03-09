@@ -69,7 +69,7 @@ const TeamSelector = ({
   onSave 
 }: TeamSelectorProps) => {
   const [selectedTeam, setSelectedTeam] = useState(currentTeam);
-  const [teamIcons, setTeamIcons] = useState<{[key: string]: string}>({});
+  const [teamIcons, setTeamIcons] = useState({} as {[key: string]: string});
 
   // Обработчик выбора команды
   const handleTeamSelect = (teamId: string) => {
